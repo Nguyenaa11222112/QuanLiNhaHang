@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="CSDLNhaHang" Class="DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.;Initial Catalog=CSDLNhaHang;Integrated Security=True" SettingsObjectName="DAL.Properties.Settings" SettingsPropertyName="CSDLNhaHangConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.ChiTietHoaDon" Member="ChiTietHoaDonlinqs">
+    <Type Name="ChiTietHoaDonlinq">
+      <Column Name="maHang" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="maHoaDon" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="soLuong" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="thanhTien" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Association Name="HangLinq_ChiTietHoaDonlinq" Member="HangLinq" Storage="_Hang" ThisKey="maHang" OtherKey="maHang" Type="HangLinq" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="HoaDonlinq_ChiTietHoaDonlinq" Member="HoaDonlinq" Storage="_HoaDon" ThisKey="maHoaDon" OtherKey="maHoaDon" Type="HoaDonlinq" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.NhanVien" Member="NhanVienlinqs">
+    <Type Name="NhanVienlinq">
+      <Column Name="maNhanVien" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="tenNhanVien" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="soDienThoai" Type="System.String" DbType="VarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="chungMinhThu" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="tenTaiKhoan" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Association Name="NhanVienlinq_HoaDonlinq" Member="HoaDonlinqs" Storage="_HoaDons" ThisKey="maNhanVien" OtherKey="maNhanVien" Type="HoaDonlinq" />
+      <Association Name="TaiKhoanlinq_NhanVienlinq" Member="TaiKhoanlinq" Storage="_TaiKhoan" ThisKey="tenTaiKhoan" OtherKey="tenTaiKhoan" Type="TaiKhoanlinq" IsForeignKey="true" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Hang" Member="HangLinqs">
+    <Type Name="HangLinq">
+      <Column Name="maHang" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="tenHang" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="donViTinh" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="donGia" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="soLuongCon" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="maLoaiHang" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="maNhaCungCap" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="HangLinq_ChiTietHoaDonlinq" Member="ChiTietHoaDonlinqs" Storage="_ChiTietHoaDons" ThisKey="maHang" OtherKey="maHang" Type="ChiTietHoaDonlinq" />
+      <Association Name="LoaiHanglinq_HangLinq" Member="LoaiHanglinq" Storage="_LoaiHang" ThisKey="maLoaiHang" OtherKey="maLoaiHang" Type="LoaiHanglinq" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="NhaCungCapLinq_HangLinq" Member="NhaCungCapLinq" ThisKey="maNhaCungCap" OtherKey="maNhaCungCap" Type="NhaCungCapLinq" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HoaDon" Member="HoaDonlinqs">
+    <Type Name="HoaDonlinq">
+      <Column Name="maHoaDon" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ngayGioTao" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="maKhachHang" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="maNhanVien" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="HoaDonlinq_ChiTietHoaDonlinq" Member="ChiTietHoaDonlinqs" Storage="_ChiTietHoaDons" ThisKey="maHoaDon" OtherKey="maHoaDon" Type="ChiTietHoaDonlinq" />
+      <Association Name="NhanVienlinq_HoaDonlinq" Member="NhanVienlinq" Storage="_NhanVien" ThisKey="maNhanVien" OtherKey="maNhanVien" Type="NhanVienlinq" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="KhachHanglinq_HoaDonlinq" Member="KhachHanglinq" Storage="_KhachHang" ThisKey="maKhachHang" OtherKey="maKhachHang" Type="KhachHanglinq" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.KhachHang" Member="KhachHanglinqs">
+    <Type Name="KhachHanglinq">
+      <Column Name="maKhachHang" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="hoten" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="diaChi" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="soDienThoai" Type="System.String" DbType="VarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="maLoaiKhachHang" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="KhachHanglinq_HoaDonlinq" Member="HoaDonlinqs" Storage="_HoaDons" ThisKey="maKhachHang" OtherKey="maKhachHang" Type="HoaDonlinq" />
+      <Association Name="LoaiKhachHanglinq_KhachHanglinq" Member="LoaiKhachHanglinq" Storage="_LoaiKhachHang" ThisKey="maLoaiKhachHang" OtherKey="maLoaiKhachHang" Type="LoaiKhachHanglinq" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LoaiHang" Member="LoaiHanglinqs">
+    <Type Name="LoaiHanglinq">
+      <Column Name="maLoaiHang" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="tenLoaiHang" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="LoaiHanglinq_HangLinq" Member="HangLinqs" Storage="_Hangs" ThisKey="maLoaiHang" OtherKey="maLoaiHang" Type="HangLinq" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LoaiKhachHang" Member="LoaiKhachHanglinqs">
+    <Type Name="LoaiKhachHanglinq">
+      <Column Name="maLoaiKhachHang" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="tenLoaiKhachHang" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="LoaiKhachHanglinq_KhachHanglinq" Member="KhachHanglinqs" Storage="_KhachHangs" ThisKey="maLoaiKhachHang" OtherKey="maLoaiKhachHang" Type="KhachHanglinq" />
+    </Type>
+  </Table>
+  <Table Name="dbo.NhaCungCap" Member="NhaCungCapLinqs">
+    <Type Name="NhaCungCapLinq">
+      <Column Name="maNhaCungCap" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="tenNhaCungCap" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="diaChi" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Association Name="NhaCungCapLinq_HangLinq" Member="HangLinqs" Storage="_Hangs" ThisKey="maNhaCungCap" OtherKey="maNhaCungCap" Type="HangLinq" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TaiKhoan" Member="TaiKhoanlinqs">
+    <Type Name="TaiKhoanlinq">
+      <Column Name="tenTaiKhoan" Type="System.String" DbType="VarChar(30) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="matKhau" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="quyen" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Association Name="TaiKhoanlinq_NhanVienlinq" Member="NhanVienlinqs" Storage="_NhanViens" ThisKey="tenTaiKhoan" OtherKey="tenTaiKhoan" Type="NhanVienlinq" />
+    </Type>
+  </Table>
+</Database>
